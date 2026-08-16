@@ -9,11 +9,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN pip install --no-cache-dir --root-user-action=ignore torch==2.7.0+cpu torchvision==0.22.0+cpu torchaudio==2.7.0+cpu --index-url https://download.pytorch.org/whl/cpu
+RUN pip install comfy-api-proxy
 COPY requirements.txt .
 RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 COPY . .
-RUN cd custom_nodes && git clone https://github.com/Comfy-Org/ComfyUI-Manager.git
 
-EXPOSE 8188
+EXPOSE 8188 8189
 
-CMD python main.py --cpu --cpu-vae --listen 0.0.0.0
+CMD comfy-api-proxy & python main.py --cpu --cpu-vae --listen 0.0.0.0
