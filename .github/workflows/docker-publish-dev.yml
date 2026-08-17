@@ -16,9 +16,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - variant: standard
+          - variant: cpu
             dockerfile: Dockerfile.cpu
             image_suffix: "cpu"
+            cache_scope: standard
+          - variant: api-proxy
+            dockerfile: Dockerfile.api-proxy
+            image_suffix: "api-proxy"
             cache_scope: standard
     permissions:
       contents: read

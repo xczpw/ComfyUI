@@ -9,11 +9,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN pip install --no-cache-dir --root-user-action=ignore torch==2.7.0+cpu torchvision==0.22.0+cpu torchaudio==2.7.0+cpu --index-url https://download.pytorch.org/whl/cpu
-RUN pip install comfy-api-proxy
 COPY requirements.txt .
 RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 COPY . .
 
-EXPOSE 8188 8189
+EXPOSE 8188
 
-CMD comfy-api-proxy & python main.py --cpu --cpu-vae --listen 0.0.0.0
+CMD python main.py --cpu --cpu-vae --listen 0.0.0.0
